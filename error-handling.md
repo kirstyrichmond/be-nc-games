@@ -47,14 +47,15 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 ### GET `/api/reviews/:review_id`
 
-- Bad `review_id` (e.g. `/dog`)
-- Well formed `review_id` that doesn't exist in the database (e.g. `/999999`)
+--- Bad `review_id` (e.g. `/dog`)
+--- Well formed `review_id` that doesn't exist in the database (e.g. `/999999`)
 
 ### PATCH `/api/reviews/:review_id`
 
 - No `inc_votes` on request body
-- Invalid `inc_votes` (e.g. `{ inc_votes : "cat" }`)
-- Some other property on request body (e.g. `{ inc_votes : 1, name: 'Mitch' }`)
+  --- Valid but non existent review_id
+  --- Invalid `inc_votes` (e.g. `{ inc_votes : "cat" }`)
+  --- Some other property on request body (e.g. `{ inc_votes : 1, name: 'Mitch' }`)
 
 ### POST `/api/reviews/:review_id/comments`
 

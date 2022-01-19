@@ -9,10 +9,15 @@
 -- ON comments.author = users.username;
 
 -- SELECT * FROM categories;
--- SELECT * FROM reviews;
+SELECT * FROM reviews;
 
-SELECT COUNT(comment)
-FROM comments
+-- SELECT reviews.*, COUNT(comments.review_id)::INT
+--       AS comment_count
+--       FROM reviews
+--       JOIN comments
+--       ON comments.review_id = reviews.review_id
+--       WHERE reviews.review_id = reviews.review_id
+--       GROUP BY reviews.review_id;
 
 
 -- SELECT * FROM users;
