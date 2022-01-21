@@ -2,6 +2,7 @@ const db = require("../db/connection.js");
 
 exports.selectCategories = async () => {
   const response = await db.query(`SELECT * FROM categories;`);
+
   return response.rows;
 };
 
@@ -16,7 +17,6 @@ exports.selectReviewById = async (review_id) => {
       GROUP BY reviews.review_id;`,
     [review_id]
   );
-
   return review.rows[0];
 };
 
@@ -92,7 +92,6 @@ exports.addComment = async (review_id, username, body) => {
       RETURNING *;`,
     [username, review_id, body]
   );
-  //   console.log(comment.rows);
   return comment.rows[0];
 };
 
@@ -102,7 +101,6 @@ exports.removeComment = async (comment_id) => {
     WHERE comment_id = $1;`,
     [comment_id]
   );
-
   return comment.rows[0];
 };
 
@@ -120,6 +118,16 @@ exports.selectUserByUsername = async (username) => {
     WHERE username = $1`,
     [username]
   );
-
   return user.rows[0];
+};
+
+exports.updateCommentVote = async (comment_id, inc_votes) => {
+  const comment = await db.query(
+    `UPDATE comments
+  SET votes = votes + $1
+  WHERE comment_id = $2
+  RETURNING *;`,
+    [inc_votes, comment_id]
+  );
+  return comment.rows[0];
 };

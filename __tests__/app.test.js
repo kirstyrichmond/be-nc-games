@@ -432,3 +432,83 @@ describe("GET /api/users/:username", () => {
       });
   });
 });
+
+describe("PATCH /api/comments/:comment_id", () => {
+  test("status 200: updates selected comment vote with positive value", () => {
+    const commentUpdate = {
+      inc_votes: 5,
+    };
+    return request(app)
+      .patch("/api/comments/2")
+      .send(commentUpdate)
+      .expect(201)
+      .then((res) => {
+        expect(res.body.comment.votes).toBe(18);
+        expect(res.body.comment).toMatchObject({
+          comment_id: 2,
+          body: "My dog loved this game too!",
+          votes: 18,
+          author: "mallionaire",
+          review_id: 3,
+          created_at: "2021-01-18T10:09:05.410Z",
+        });
+      });
+  });
+  test("status 200: updates selected comment vote with negative value", () => {
+    const commentUpdate = {
+      inc_votes: -2,
+    };
+    return request(app)
+      .patch("/api/comments/6")
+      .send(commentUpdate)
+      .expect(201)
+      .then((res) => {
+        expect(res.body.comment.votes).toBe(8);
+        expect(res.body.comment).toMatchObject({
+          comment_id: 6,
+          body: "Not sure about dogs, but my cat likes to get involved with board games, the boxes are their particular favourite",
+          votes: 8,
+          author: "philippaclaire9",
+          review_id: 3,
+          created_at: "2021-03-27T19:49:48.110Z",
+        });
+      });
+  });
+  test('status 404: responds with "not found" when updating a non-existing comment', () => {
+    const commentUpdate = {
+      inc_votes: 8,
+    };
+    return request(app)
+      .patch("/api/comments/9999")
+      .send(commentUpdate)
+      .expect(404)
+      .then((res) => {
+        expect(res.body.msg).toBe("Not found!");
+      });
+  });
+  test('status 400: responds with "Bad request! when passed invalid inc_votes', () => {
+    const commentUpdate = {
+      inc_votes: "invalid",
+    };
+    return request(app)
+      .patch("/api/comments/1")
+      .send(commentUpdate)
+      .expect(400)
+      .then((res) => {
+        expect(res.body.msg).toBe("Bad request!");
+      });
+  });
+  test('status 400: returns "Bad request" when passed inc_votes with another property on request body', () => {
+    const commentUpdate = {
+      inc_votes: 1,
+      username: "Snoop dogg",
+    };
+    return request(app)
+      .patch("/api/comments/2")
+      .send(commentUpdate)
+      .expect(400)
+      .then((res) => {
+        expect(res.body.msg).toBe("Bad request!");
+      });
+  });
+});

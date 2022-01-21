@@ -25,4 +25,4 @@ SELECT * FROM reviews;
 -- SELECT review_id, title, category FROM reviews;
 
 
--- SELECT * FROM comments;
+SELECT * FROM comments;

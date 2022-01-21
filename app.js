@@ -9,6 +9,7 @@ const {
   getUserByUsername,
   patchReviewByVote,
   postComment,
+  patchCommentVote,
   deleteComment,
 } = require("./controllers/games.controller");
 const app = express();
@@ -24,12 +25,12 @@ app.get("/api/reviews", getReviews);
 app.get("/api/reviews/:review_id", getReviewById);
 app.get("/api/reviews/:review_id/comments", getCommentsByReview);
 app.patch("/api/reviews/:review_id", patchReviewByVote);
-
 app.post("/api/reviews/:review_id/comments", postComment);
 
 app.get("/api/users", getUsers);
 app.get("/api/users/:username", getUserByUsername);
 
+app.patch("/api/comments/:comment_id", patchCommentVote);
 app.delete("/api/comments/:comment_id", deleteComment);
 
 app.all("*", (req, res) => {
