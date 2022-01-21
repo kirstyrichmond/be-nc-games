@@ -105,3 +105,10 @@ exports.removeComment = async (comment_id) => {
 
   return comment.rows[0];
 };
+
+exports.selectUsers = async () => {
+  const users = db.query(`SELECT username
+    FROM users;`);
+
+  return users;
+};

@@ -268,14 +268,14 @@ describe("GET /api/reviews", () => {
         expect(res.body.msg).toBe("Bad request!");
       });
   });
-    // test("status 404: valid but non-existent category query", () => {
-    //   return request(app)
-    //     .get("/api/reviews?category=bananas")
-    //     .expect(404)
-    //     .then((res) => {
-    //       expect(res.body.msg).toBe("Not found!");
-    //     });
-    // });
+  // test("status 404: valid but non-existent category query", () => {
+  //   return request(app)
+  //     .get("/api/reviews?category=bananas")
+  //     .expect(404)
+  //     .then((res) => {
+  //       expect(res.body.msg).toBe("Not found!");
+  //     });
+  // });
 });
 
 describe("GET /api/reviews/:review_id/comments", () => {
@@ -392,19 +392,20 @@ describe("DELETE /api/comments/:comment_id", () => {
   });
 });
 
-// describe('GET /api/users', () => {
-//     test('status 200: responds with array of user objects containing "username" property', () => {
-//       return request(app)
-//       .get("/api/users")
-//       .expect(200)
-//       .then((res) => {
-//         // expect(res.body.users).toBeInstanceOf(Array);
-//         // expect(res.body.users).toHaveLength(4);
-//         res.body.users.forEach((user) => {
-//           expect(user).toMatchObject({
-//               username: expect.any(String)
-//           });
-//         });
-//       });
-//     });
-// });
+describe("GET /api/users", () => {
+  test('status 200: responds with array of user objects containing "username" property', () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then((res) => {
+        expect(res.body.users.rows).toBeInstanceOf(Array);
+        expect(res.body.users.rows).toHaveLength(4);
+        console.log(res.body.users.rows);
+        res.body.users.rows.forEach((user) => {
+          expect(user).toMatchObject({
+            username: expect.any(String),
+          });
+        });
+      });
+  });
+});

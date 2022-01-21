@@ -4,6 +4,7 @@ const {
   selectReviews,
   selectReviewById,
   selectCommentsByReview,
+  selectUsers,
   updateReviewByVote,
   addComment,
   removeComment,
@@ -96,7 +97,7 @@ exports.getCommentsByReview = async (req, res, next) => {
 exports.postComment = async (req, res, next) => {
   const { review_id } = req.params;
   const { username, body } = req.body;
-//   console.log(body);
+  //   console.log(body);
   try {
     const reviewExists = await checkReviewExists(review_id);
     const userExists = await checkUserExists(username);
@@ -125,6 +126,15 @@ exports.deleteComment = async (req, res, next) => {
       const comment = await removeComment(comment_id);
       res.status(204).send({ comment });
     }
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getUsers = async (req, res, next) => {
+  try {
+    const usersData = await selectUsers();
+    res.status(200).send({ users: usersData });
   } catch (err) {
     next(err);
   }
