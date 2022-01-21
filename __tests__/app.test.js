@@ -392,19 +392,19 @@ describe("DELETE /api/comments/:comment_id", () => {
   });
 });
 
-describe('GET /api/users', () => {
-    test('status 200: responds with array of user objects containing "username" property', () => {
-      return request(app)
-      .get("/api/users")
-      .expect(200)
-      .then((res) => {
-        // expect(res.body.users).toBeInstanceOf(Array);
-        // expect(res.body.users).toHaveLength(4);
-        res.body.users.forEach((user) => {
-          expect(user).toMatchObject({
-              username: expect.any(String)
-          });
-        });
-      });
-    });
-});
+// describe('GET /api/users', () => {
+//     test('status 200: responds with array of user objects containing "username" property', () => {
+//       return request(app)
+//       .get("/api/users")
+//       .expect(200)
+//       .then((res) => {
+//         // expect(res.body.users).toBeInstanceOf(Array);
+//         // expect(res.body.users).toHaveLength(4);
+//         res.body.users.forEach((user) => {
+//           expect(user).toMatchObject({
+//               username: expect.any(String)
+//           });
+//         });
+//       });
+//     });
+// });

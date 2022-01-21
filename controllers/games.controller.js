@@ -1,10 +1,19 @@
+const { push } = require("../db/data/test-data/reviews");
 const {
   selectCategories,
+  selectReviews,
   selectReviewById,
+  selectCommentsByReview,
   updateReviewByVote,
+  addComment,
+  removeComment,
 } = require("../models/games.model");
 
-const { checkReviewExists } = require("../utils/utils");
+const {
+  checkReviewExists,
+  checkUserExists,
+  checkCommentExists,
+} = require("../utils/utils");
 
 exports.getCategories = async (req, res, next) => {
   try {
@@ -47,7 +56,6 @@ exports.patchReviewByVote = async (req, res, next) => {
     next(err);
   }
 };
-<<<<<<< HEAD
 
 exports.getReviews = async (req, res, next) => {
   const { sort_by, order, category } = req.query;
@@ -88,7 +96,7 @@ exports.getCommentsByReview = async (req, res, next) => {
 exports.postComment = async (req, res, next) => {
   const { review_id } = req.params;
   const { username, body } = req.body;
-  //   console.log(body);
+//   console.log(body);
   try {
     const reviewExists = await checkReviewExists(review_id);
     const userExists = await checkUserExists(username);
@@ -121,9 +129,3 @@ exports.deleteComment = async (req, res, next) => {
     next(err);
   }
 };
-
-exports.getUsers = async (req, res, next) => {
-  console.log("inside controller...");
-};
-=======
->>>>>>> parent of f6f4f45 (completed endpoints up until hosting task)
