@@ -1,12 +1,17 @@
 const db = require("../db/connection.js");
 
 exports.selectCategories = async () => {
-  const response = await db.query(`SELECT * FROM categories;`);
-  return response.rows;
+  try {
+    const response = await db.query(`SELECT * FROM categories;`);
+
+    return response.rows;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.selectReviewById = async (review_id) => {
-  const review = await db.query(
+  const reviewQuery = await db.query(
     `SELECT reviews.*, COUNT(comments.review_id)::INT
       AS comment_count
       FROM reviews
@@ -17,91 +22,42 @@ exports.selectReviewById = async (review_id) => {
     [review_id]
   );
 
-  return review.rows[0];
+  return reviewQuery.rows[0];
 };
 
 exports.updateReviewByVote = async (review_id, updateVote) => {
-  const reviewVote = await db.query(
-    `UPDATE reviews
+    const updateVoteQuery = await db.query
+    (`UPDATE reviews
       SET votes = votes + $1
       WHERE review_id = $2
       RETURNING *;`,
-    [updateVote, review_id]
-  );
+      [updateVote, review_id])
 
-  return reviewVote.rows[0];
-};
+      return updateVoteQuery.rows[0]
 
-exports.selectReviews = async (
-  sortBy = "created_at",
-  orderBy = "desc",
-  category
-) => {
-  const validOrderBy = ["asc", "desc"];
 
-  const validSortBy = [
-    "review_id",
-    "title",
-    "designer",
-    "review_body",
-    "category",
-    "created_at",
-    "votes",
-  ];
+//   const readPromise = db.query(
+//     `SELECT * FROM reviews
+//     WHERE review_id = $1;`,
+//     [review_id]
+//   );
 
-  if (!validOrderBy.includes(orderBy) || !validSortBy.includes(sortBy)) {
-    return Promise.reject({
-      status: 400,
-      msg: "Bad request!",
-    });
-  }
+//   const resolvedPromise = await Promise.resolve(readPromise);
+//   console.log(resolvedPromise.rows[0])
 
-  let categoryFilter = ``;
-  if (category) {
-    categoryFilter = `WHERE reviews.category = '${category}'`;
-  }
+//   const oldVotes = resolvedPromise.rows[0].votes;
+//   const newVotes = oldVotes + inc_votes;
 
-  let review = `SELECT reviews.review_id, reviews.title, reviews.owner, reviews.review_img_url, reviews.category, reviews.created_at, reviews.votes, COUNT(comments.comment_id)::INT
-        AS comment_count
-        FROM reviews
-        LEFT JOIN comments
-        ON reviews.review_id = comments.review_id
-        ${categoryFilter}
-        GROUP BY reviews.review_id
-        ORDER BY ${sortBy} ${orderBy};`;
-  const reviewResolved = await db.query(review);
+// //   console.log(newVotes);
+//   const updatePromise = db.query(
+//     `UPDATE reviews
+//       SET votes = $1
+//       WHERE review_id = $2
+//       RETURNING *;`,
+//     [newVotes, review_id]
+//   );
 
-  return reviewResolved.rows;
-};
+//   const updatedPromise = await Promise.resolve(updatePromise);
 
-exports.selectCommentsByReview = async (review_id) => {
-  const comments = await db.query(
-    `SELECT * FROM comments
-      WHERE comments.review_id = $1;`,
-    [review_id]
-  );
-  return comments.rows;
-};
-
-exports.addComment = async (review_id, username, body) => {
-  const comment = await db.query(
-    `INSERT INTO comments
-      (author, review_id, body)
-      VALUES 
-      ($1, $2, $3)
-      RETURNING *;`,
-    [username, review_id, body]
-  );
-  //   console.log(comment.rows);
-  return comment.rows[0];
-};
-
-exports.removeComment = async (comment_id) => {
-  const comment = await db.query(
-    `DELETE FROM comments
-    WHERE comment_id = $1;`,
-    [comment_id]
-  );
-
-  return comment.rows[0];
+//   return updatedPromise.rows[0];
 };

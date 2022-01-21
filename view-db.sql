@@ -9,24 +9,7 @@
 -- ON comments.author = users.username;
 
 -- SELECT * FROM categories;
--- SELECT reviews.review_id, reviews.title, reviews.owner, reviews.review_img_url, reviews.category, reviews.created_at, reviews.votes, COUNT(comments.review_id)::INT
---     AS comment_count
---     FROM reviews
---     FULL JOIN comments
---     ON comments.review_id = reviews.review_id
---     GROUP BY reviews.review_id
---     ORDER BY votes DESC;
-
--- comment_id`
---   - `votes`
---   - `created_at`
---   - `author` which is the `username` from the users table
---   - `body`
-
--- SELECT * 
--- FROM comments
--- WHERE review_id = 2;
-
+SELECT * FROM reviews;
 
 -- SELECT reviews.*, COUNT(comments.review_id)::INT
 --       AS comment_count
@@ -42,4 +25,4 @@
 -- SELECT review_id, title, category FROM reviews;
 
 
-SELECT * FROM reviews;
+-- SELECT * FROM comments;

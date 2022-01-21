@@ -30,7 +30,7 @@ const seed = (data) => {
       CREATE TABLE users (
         username VARCHAR(25) PRIMARY KEY,
         name VARCHAR(55) NOT NULL,
-        avatar_url VARCHAR(300) NOT NULL
+        avatar_url VARCHAR(300)
       )
       `);
       })

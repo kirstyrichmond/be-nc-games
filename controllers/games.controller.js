@@ -1,19 +1,10 @@
-const { push } = require("../db/data/test-data/reviews");
 const {
   selectCategories,
-  selectReviews,
   selectReviewById,
-  selectCommentsByReview,
   updateReviewByVote,
-  addComment,
-  removeComment,
 } = require("../models/games.model");
 
-const {
-  checkReviewExists,
-  checkUserExists,
-  checkCommentExists,
-} = require("../utils/utils");
+const { checkReviewExists } = require("../utils/utils");
 
 exports.getCategories = async (req, res, next) => {
   try {
@@ -56,6 +47,7 @@ exports.patchReviewByVote = async (req, res, next) => {
     next(err);
   }
 };
+<<<<<<< HEAD
 
 exports.getReviews = async (req, res, next) => {
   const { sort_by, order, category } = req.query;
@@ -133,3 +125,5 @@ exports.deleteComment = async (req, res, next) => {
 exports.getUsers = async (req, res, next) => {
   console.log("inside controller...");
 };
+=======
+>>>>>>> parent of f6f4f45 (completed endpoints up until hosting task)
