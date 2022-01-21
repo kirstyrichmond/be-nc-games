@@ -1,49 +1,14 @@
 const express = require("express");
-const endpoints = require("./endpoints.json");
-const {
-  getCategories,
-  getReviews,
-  getReviewById,
-  getCommentsByReview,
-  getUsers,
-  getUserByUsername,
-  patchReviewByVote,
-  postComment,
-  patchCommentVote,
-  deleteComment,
-} = require("./controllers/games.controller");
+const apiRouter = require("./routes/api-router");
 const app = express();
+
 app.use(express.json());
 
-app.get("/api", (req, res, next) => {
-  res.send(endpoints);
-});
-
-app.get("/api/categories", getCategories);
-
-app.get("/api/reviews", getReviews);
-app.get("/api/reviews/:review_id", getReviewById);
-app.get("/api/reviews/:review_id/comments", getCommentsByReview);
-app.patch("/api/reviews/:review_id", patchReviewByVote);
-app.post("/api/reviews/:review_id/comments", postComment);
-
-app.get("/api/users", getUsers);
-app.get("/api/users/:username", getUserByUsername);
-
-app.patch("/api/comments/:comment_id", patchCommentVote);
-app.delete("/api/comments/:comment_id", deleteComment);
+app.use("/api", apiRouter);
 
 app.all("*", (req, res) => {
   res.status(404).send({ msg: "Not found!" });
 });
-
-// app.use((err, req, res, next) => {
-//   if (err.code === "42703") {
-//     res.status(404).send({ msg: "Not found!" });
-//   } else {
-//     next(err);
-//   }
-// });
 
 app.use((err, req, res, next) => {
   if (err.code === "22P02" || err.code === "42703") {

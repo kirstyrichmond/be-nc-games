@@ -1,11 +1,5 @@
 const db = require("../db/connection.js");
 
-exports.selectCategories = async () => {
-  const response = await db.query(`SELECT * FROM categories;`);
-
-  return response.rows;
-};
-
 exports.selectReviewById = async (review_id) => {
   const review = await db.query(
     `SELECT reviews.*, COUNT(comments.review_id)::INT
@@ -86,48 +80,11 @@ exports.selectCommentsByReview = async (review_id) => {
 exports.addComment = async (review_id, username, body) => {
   const comment = await db.query(
     `INSERT INTO comments
-      (author, review_id, body)
-      VALUES 
-      ($1, $2, $3)
-      RETURNING *;`,
+        (author, review_id, body)
+        VALUES 
+        ($1, $2, $3)
+        RETURNING *;`,
     [username, review_id, body]
-  );
-  return comment.rows[0];
-};
-
-exports.removeComment = async (comment_id) => {
-  const comment = await db.query(
-    `DELETE FROM comments
-    WHERE comment_id = $1;`,
-    [comment_id]
-  );
-  return comment.rows[0];
-};
-
-exports.selectUsers = async () => {
-  const users = await db.query(`SELECT username
-    FROM users;`);
-
-  return users;
-};
-
-exports.selectUserByUsername = async (username) => {
-  const user = await db.query(
-    `SELECT *
-    FROM users
-    WHERE username = $1`,
-    [username]
-  );
-  return user.rows[0];
-};
-
-exports.updateCommentVote = async (comment_id, inc_votes) => {
-  const comment = await db.query(
-    `UPDATE comments
-  SET votes = votes + $1
-  WHERE comment_id = $2
-  RETURNING *;`,
-    [inc_votes, comment_id]
   );
   return comment.rows[0];
 };

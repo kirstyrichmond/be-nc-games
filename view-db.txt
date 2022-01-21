@@ -16,13 +16,10 @@ You are now connected to database "nc_games_test" as user "apple".
         13 | Settlers of Catan: Don't Settle For Less             | Klaus Teuber           | mallionaire     | https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg                    | You have stumbled across an uncharted island rich in natural resources, but you are not alone; other adventurers have come ashore too, and the race to settle the island of Catan has begun! Whether you exert military force, build a road to rival the Great Wall, trade goods with ships from the outside world, or some combination of all three, the aim is the same: to dominate the island. Will you prevail? Proceed strategically, trade wisely, and may the odds be in favour.                                                                                                                                                                                                                                                                                                                    | social deduction | 1970-01-10 03:08:38.4   |    16
 (13 rows)
 
- comment_id |                                                       body                                                       | votes |     author      | review_id |       created_at        
-------------+------------------------------------------------------------------------------------------------------------------+-------+-----------------+-----------+-------------------------
-          1 | I loved this game too!                                                                                           |    16 | bainesface      |         2 | 2017-11-22 12:43:33.389
-          2 | My dog loved this game too!                                                                                      |    13 | mallionaire     |         3 | 2021-01-18 10:09:05.41
-          3 | I didn't know dogs could play games                                                                              |    10 | philippaclaire9 |         3 | 2021-01-18 10:09:48.11
-          4 | EPIC board game!                                                                                                 |    16 | bainesface      |         2 | 2017-11-22 12:36:03.389
-          5 | Now this is a story all about how, board games turned my life upside down                                        |    13 | mallionaire     |         2 | 2021-01-18 10:24:05.41
-          6 | Not sure about dogs, but my cat likes to get involved with board games, the boxes are their particular favourite |    10 | philippaclaire9 |         3 | 2021-03-27 19:49:48.11
-(6 rows)
+ comment_id |                                   body                                    | votes |   author    | review_id |       created_at        
+------------+---------------------------------------------------------------------------+-------+-------------+-----------+-------------------------
+          1 | I loved this game too!                                                    |    16 | bainesface  |         2 | 2017-11-22 12:43:33.389
+          4 | EPIC board game!                                                          |    16 | bainesface  |         2 | 2017-11-22 12:36:03.389
+          5 | Now this is a story all about how, board games turned my life upside down |    13 | mallionaire |         2 | 2021-01-18 10:24:05.41
+(3 rows)
 

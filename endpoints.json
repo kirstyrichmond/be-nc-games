@@ -8,10 +8,15 @@
     "exampleResponse": {
       "categories": [
         {
-          "description": "Players attempt to uncover each other's hidden role",
-          "slug": "Social deduction"
-        }
-      ]
+          "slug": "Social deduction",
+          "description": "Players attempt to uncover each other's hidden role"
+        },
+        { "slug": "euro game", 
+          "description": "Abstact games that involve little luck" },
+        { "slug": "dexterity", 
+          "description": "Games involving physical skill" },
+        { "slug": "children's games", 
+          "description": "Games suitable for children" }]
     }
   },
   "GET /api/reviews": {
@@ -29,15 +34,37 @@
           "created_at": 1610964101251,
           "votes": 5 ,
           "comment_count": 1 
+        },
+        {
+          "title": "Agricola",
+          "designer": "Uwe Rosenberg",
+          "owner": "mallionaire",
+          "review_img_url":
+            "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+          "review_body": "Farmyard fun!",
+          "category": "euro game",
+          "created_at": "new Date(1610964020514)",
+          "votes": 1
+        },
+        {
+          "title": "Jenga",
+          "designer": "Leslie Scott",
+          "owner": "philippaclaire9",
+          "review_img_url":
+            "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+          "review_body": "Fiddly fun for all the family",
+          "category": "dexterity",
+          "created_at": "new Date(1610964101251)",
+          "votes": 5
         }
       ]
     }
   },
   "GET /api/reviews/:review_id": {
-    "description": "serves a review object",
+    "description": "serves a review specified by review_id",
     "queries": [],
     "exampleResponse": {
-      "reviews": [
+      "review": [
         {
           "review_id": 3,
           "title": "Ultimate Werewolf",
@@ -61,7 +88,7 @@
       "inc_votes": 10
     },
     "exampleResponse": {
-      "reviews": [
+      "review": [
         {
           "review_id": 1,
           "title": "Agricola",
@@ -79,31 +106,49 @@
     }
   },
   "GET /api/reviews/:review_id/comments": {
-    "description": "serves an array of comments",
+    "description": "serves an array of comments from specified review",
     "queries": [],
+    "example": {
+      "review_id": 2
+    },
     "exampleResponse": {
-      "reviews": [
+      "comments": [
         {
-          "comment_id": 11,
+          "comment_id": 1,
           "body": "I loved this game too!",
           "votes": 16,
           "author": "bainesface",
           "review_id": 2,
           "created_at": "2021-01-18T10:00:20.514Z"
-
+        },
+        {
+          "comment_id": 4,
+          "body": "EPIC board game!",
+          "votes": 16,
+          "author": "bainesface",
+          "review_id": 2,
+          "created_at": "2021-01-18T10:00:20.514Z"
+        },
+        {
+          "comment_id": 5,
+          "body": "Now this is a story all about how, board games turned my life upside down",
+          "votes": 13,
+          "author": "mallionaire",
+          "review_id": 2,
+          "created_at": "2021-01-18T10:00:20.514Z"
         }
       ]
     }
   },
   "POST /api/reviews/:review_id/comments": {
-    "description": "posts a new comment",
+    "description": "posts a new comment on to specified review",
     "queries": [],
     "exampleRequest": {
       "username": "bainesface",
       "body": "Best game ever!!!"
     },
     "exampleResponse": {
-      "reviews": [
+      "comment": [
         {
           "comment_id": 12,
           "body": "Best game ever!!!",
@@ -126,6 +171,60 @@
     "exampleResponse": {
       "review": [
         {}
+      ]
+    }
+  },
+  "GET /api/users": {
+    "description": "serves an array of all users",
+    "queries": [],
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "mallionaire"
+        },
+        {
+          "username": "philippaclaire9"
+        },
+        {
+          "username": "bainesface"
+        },
+        {
+          "username": "dav3rid"
+        }
+      ]
+    }
+  },
+  "GET /api/users/:username": {
+    "description": "serves a username when specified",
+    "queries": [],
+    "example": {
+      "username": "philippaclaire9"
+    },
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "philippaclaire9",
+          "name": "philippa",
+          "avatar_url": "'https://avatars2.githubusercontent.com/u/24604688?s=460&v=4'"
+        }
+      ]
+    }
+  },
+  "PATCH /api/comments/:comment_id": {
+    "description": "serves an updated comment object",
+    "queries": [],
+    "exampleRequest": {
+      "inc_votes": 10
+    },
+    "exampleResponse": {
+      "comment": [
+        {
+          "body": "EPIC board game!",
+          "votes": 26,
+          "author": "bainesface",
+          "review_id": 2,
+          "created_at": "new Date(1511354163389)"
+        }
       ]
     }
   }
