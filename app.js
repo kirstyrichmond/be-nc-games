@@ -6,6 +6,7 @@ const {
   getReviewById,
   getCommentsByReview,
   getUsers,
+  getUserByUsername,
   patchReviewByVote,
   postComment,
   deleteComment,
@@ -22,12 +23,12 @@ app.get("/api/categories", getCategories);
 app.get("/api/reviews", getReviews);
 app.get("/api/reviews/:review_id", getReviewById);
 app.get("/api/reviews/:review_id/comments", getCommentsByReview);
-
-app.get("/api/users", getUsers);
-
 app.patch("/api/reviews/:review_id", patchReviewByVote);
 
 app.post("/api/reviews/:review_id/comments", postComment);
+
+app.get("/api/users", getUsers);
+app.get("/api/users/:username", getUserByUsername);
 
 app.delete("/api/comments/:comment_id", deleteComment);
 

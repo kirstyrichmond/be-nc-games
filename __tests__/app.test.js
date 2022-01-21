@@ -400,12 +400,35 @@ describe("GET /api/users", () => {
       .then((res) => {
         expect(res.body.users.rows).toBeInstanceOf(Array);
         expect(res.body.users.rows).toHaveLength(4);
-        console.log(res.body.users.rows);
         res.body.users.rows.forEach((user) => {
           expect(user).toMatchObject({
             username: expect.any(String),
           });
         });
+      });
+  });
+});
+
+describe("GET /api/users/:username", () => {
+  test("status 200: responds with a user object when passed a valid username", () => {
+    return request(app)
+      .get("/api/users/mallionaire")
+      .expect(200)
+      .then((res) => {
+        expect(res.body.user).toMatchObject({
+          username: "mallionaire",
+          name: "haz",
+          avatar_url:
+            "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg",
+        });
+      });
+  });
+  test('status 404: responds with "not found" when passed a non-existent username', () => {
+    return request(app)
+      .get("/api/users/mickeymouse88")
+      .expect(404)
+      .then((res) => {
+        expect(res.body.msg).toBe("Not found!");
       });
   });
 });

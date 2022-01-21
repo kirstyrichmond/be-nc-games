@@ -5,6 +5,7 @@ const {
   selectReviewById,
   selectCommentsByReview,
   selectUsers,
+  selectUserByUsername,
   updateReviewByVote,
   addComment,
   removeComment,
@@ -135,6 +136,20 @@ exports.getUsers = async (req, res, next) => {
   try {
     const usersData = await selectUsers();
     res.status(200).send({ users: usersData });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getUserByUsername = async (req, res, next) => {
+  const { username } = req.params;
+  const user = await selectUserByUsername(username);
+  if (user) {
+    res.status(200).send({ user });
+  } else {
+    res.status(404).send({ msg: "Not found!" });
+  }
+  try {
   } catch (err) {
     next(err);
   }
