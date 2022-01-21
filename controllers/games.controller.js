@@ -96,7 +96,7 @@ exports.getCommentsByReview = async (req, res, next) => {
 exports.postComment = async (req, res, next) => {
   const { review_id } = req.params;
   const { username, body } = req.body;
-//   console.log(body);
+  //   console.log(body);
   try {
     const reviewExists = await checkReviewExists(review_id);
     const userExists = await checkUserExists(username);
@@ -128,4 +128,8 @@ exports.deleteComment = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+exports.getUsers = async (req, res, next) => {
+  console.log("inside controller...");
 };
