@@ -6,7 +6,7 @@ const {
   addComment,
 } = require("../models/reviews-models");
 
-const { checkReviewExists, checkUserExists } = require("../utils/utils");
+const { checkReviewExists, checkUserExists } = require("../utils/check-exists-utils");
 
 exports.getReviewById = async (req, res, next) => {
   const { review_id } = req.params;

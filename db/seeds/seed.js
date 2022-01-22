@@ -1,41 +1,39 @@
 const db = require("../connection");
 const format = require("pg-format");
+const {
+  formatCategories,
+  formatUsers,
+  formatReviews,
+  formatComments,
+} = require("../../utils/seed-utils");
 
-const seed = (data) => {
+const seed = async (data) => {
   const { categoryData, commentData, reviewData, userData } = data;
-  // 1. create tables
-  // 2. insert data
-  return (
-    db
-      .query(`DROP TABLE IF EXISTS comments;`)
-      .then(() => {
-        return db.query(`DROP TABLE IF EXISTS reviews;`);
-      })
-      .then(() => {
-        return db.query(`DROP TABLE IF EXISTS users;`);
-      })
-      .then(() => {
-        return db.query(`DROP TABLE IF EXISTS categories;`);
-      })
-      .then(() => {
-        return db.query(`
+
+  await db.query(`DROP TABLE IF EXISTS comments, reviews, users, categories;`);
+
+  // Create Categories Table //
+
+  await db.query(`
       CREATE TABLE categories (
         slug VARCHAR(50) NOT NULL PRIMARY KEY,
         description VARCHAR(600) NOT NULL
         );
       `);
-      })
-      .then(() => {
-        return db.query(`
+
+  // Create Users Table //
+
+  await db.query(`
       CREATE TABLE users (
         username VARCHAR(25) PRIMARY KEY,
         name VARCHAR(55) NOT NULL,
         avatar_url VARCHAR(300)
       )
       `);
-      })
-      .then(() => {
-        return db.query(`
+
+  // Create Reviews Table //
+
+  await db.query(`
       CREATE TABLE reviews (
         review_id SERIAL PRIMARY KEY,
         title VARCHAR(75) NOT NULL,
@@ -49,9 +47,10 @@ const seed = (data) => {
         votes INT DEFAULT 0
         );
       `);
-      })
-      .then(() => {
-        return db.query(`
+
+  // Create Comments Table //
+
+  await db.query(`
       CREATE TABLE comments (
         comment_id SERIAL PRIMARY KEY,
         body VARCHAR(1000) NOT NULL,
@@ -61,107 +60,62 @@ const seed = (data) => {
         created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
       `);
-      })
-      .then(() => {
-        const formattedCategories = categoryData.map((category) => {
-          const { slug, description } = category;
 
-          return [slug, description];
-        });
-        const sql = format(
-          `INSERT INTO categories
+  // Insert into Categories Table //
+
+  const formattedCategories = formatCategories(categoryData);
+
+  const categoryQuery = format(
+    `INSERT INTO categories
       (slug, description)
       VALUES
       %L RETURNING *;`,
-          formattedCategories
-        );
-        return db.query(sql);
-      })
-      // .then((result) => {
-      //   const categoryRows = result.rows;
+    formattedCategories
+  );
+  await db.query(categoryQuery);
 
-      //   const createCategroyRef = (categoryRows) => {
-      //     const ref = {};
+  // Insert into Users Table //
 
-      //     categoryRows.forEach((category) => {
-      //       ref[category.slug] = category.id;
-      //     });
-      //     return ref;
-      //   };
-      //   console.log(createCategroyRef(categoryRows))
-      // })
-      .then(() => {
-        const formattedUsers = userData.map((user) => {
-          const { username, name, avatar_url } = user;
-          return [username, name, avatar_url];
-        });
-        const sql = format(
-          `
+  const formattedUsers = formatUsers(userData);
+  const usersQuery = format(
+    `
           INSERT INTO users
           (username, name, avatar_url)
           VALUES
           %L RETURNING *;
           `,
-          formattedUsers
-        );
-        return db.query(sql);
-      })
-      .then(() => {
-        const formattedReviews = reviewData.map((review) => {
-          const {
-            title,
-            category,
-            owner,
-            review_body,
-            designer,
-            review_img_url,
-            votes,
-            created_at,
-          } = review;
-          return [
-            title,
-            category,
-            owner,
-            review_body,
-            designer,
-            review_img_url,
-            votes,
-            created_at,
-          ];
-        });
-        // console.log(formattedReviews);
-        const sql = format(
-          `
+    formattedUsers
+  );
+  await db.query(usersQuery);
+
+  // Insert into Reviews Table //
+
+  const formattedReviews = formatReviews(reviewData);
+  const reviewsQuery = format(
+    `
           INSERT INTO reviews
           (title, category, owner, review_body, designer, review_img_url, votes, created_at)
           VALUES
           %L RETURNING *;
           `,
-          formattedReviews
-        );
-        return db.query(sql);
-      })
-      .then(() => {
-        const formattedComments = commentData.map((comment) => {
-          const { author, review_id, body, votes, created_at } = comment;
-          return [author, review_id, body, votes, created_at];
-        });
-        // console.log(formattedComments);
-        const sql = format(
-          `
+    formattedReviews
+  );
+  await db.query(reviewsQuery);
+
+  // Insert into Comments Table //
+
+  const formattedComments = formatComments(commentData);
+
+  const commentsQuery = format(
+    `
       INSERT INTO comments
       (author, review_id, body, votes, created_at)
       VALUES
       %L RETURNING *;
       `,
-          formattedComments
-        );
-        return db.query(sql);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    formattedComments
   );
+  await db.query(commentsQuery);
 };
 
 module.exports = seed;

@@ -2,7 +2,7 @@ const {
   removeComment,
   updateCommentVote,
 } = require("../models/comments-models");
-const { checkCommentExists } = require("../utils/utils");
+const { checkCommentExists } = require("../utils/check-exists-utils");
 
 exports.patchCommentVote = async (req, res, next) => {
   const { comment_id } = req.params;

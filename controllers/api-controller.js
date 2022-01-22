@@ -1,5 +1,10 @@
-const endpoints = require("../endpoints.json");
+const { selectEndpoints } = require("../models/api-model");
 
-exports.getApi = (req, res) => {
-  res.status(200).send(endpoints);
+exports.getApi = async (req, res, next) => {
+  try {
+    const endpoints = await selectEndpoints();
+    res.status(200).send({ endpoints });
+  } catch {
+    next(err);
+  }
 };

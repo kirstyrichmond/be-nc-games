@@ -7,7 +7,6 @@ exports.checkReviewExists = async (review_id) => {
         WHERE review_id = $1`,
     [review_id]
   );
-  //   console.log(review.rows);
   if (review.rows.length) {
     return true;
   } else {
