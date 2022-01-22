@@ -1,4 +1,4 @@
-name: Test and Deploy
+name: Test & Deploy
 
 on:
   push:
@@ -7,21 +7,35 @@ on:
 
 jobs:
   test:
-    name: test
+    name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: checkout repo
+      - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: setup postgres
+      - name: Use PostgreSQL
         uses: harmon758/postgresql-action@v1
         with:
-          postgresql db: be-nc-games
-          postgresql user: kirsty
-          postgresql password: ninja007
+          postgresql db: "my_db"
+          postgresql user: "test_user"
+          postgresql password: "test_password"
 
-      - name: install dependencies
+      - name: Install dependencies
         run: npm i
 
-      - name: test everything
-        run: PGDATABASE=be-nc-games PGUSER=kirsty PGPASSWORD=ninja007 npm t
+      - name: Run tests
+        run: PGDATABASE=my_db PGUSER=test_user PGPASSWORD=test_password npm t
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
