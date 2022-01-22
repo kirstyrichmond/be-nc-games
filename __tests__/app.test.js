@@ -230,13 +230,9 @@ describe("GET /api/reviews", () => {
       .expect(400);
     expect(res.body.msg).toBe("Bad request!");
   });
-  // test("status 404: valid but non-existent category query", () => {
-  //   return request(app)
-  //     .get("/api/reviews?category=bananas")
-  //     .expect(404)
-  //     .then((res) => {
-  //       expect(res.body.msg).toBe("Not found!");
-  //     });
+  // test("status 404: valid but non-existent category query", async () => {
+  //   const res = await request(app).get("/api/reviews?category=bananas").expect(404);
+  //   expect(res.body.msg).toBe("Not found!");
   // });
 });
 
