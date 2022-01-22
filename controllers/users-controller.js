@@ -14,7 +14,7 @@ exports.getUserByUsername = async (req, res, next) => {
   try {
     const user = await selectUserByUsername(username);
     if (user) {
-      res.status(200).send({ user });
+      res.status(200).send({ user: user });
     } else {
       res.status(404).send({ msg: "Not found!" });
     }

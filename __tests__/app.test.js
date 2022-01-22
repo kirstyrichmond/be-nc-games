@@ -398,9 +398,9 @@ describe("GET /api/users", () => {
       .get("/api/users")
       .expect(200)
       .then((res) => {
-        expect(res.body.users.rows).toBeInstanceOf(Array);
-        expect(res.body.users.rows).toHaveLength(4);
-        res.body.users.rows.forEach((user) => {
+        expect(res.body.users).toBeInstanceOf(Array);
+        expect(res.body.users).toHaveLength(4);
+        res.body.users.forEach((user) => {
           expect(user).toMatchObject({
             username: expect.any(String),
           });

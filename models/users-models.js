@@ -4,7 +4,7 @@ exports.selectUsers = async () => {
   const users = await db.query(`SELECT username
       FROM users;`);
 
-  return users;
+  return users.rows;
 };
 
 exports.selectUserByUsername = async (username) => {
