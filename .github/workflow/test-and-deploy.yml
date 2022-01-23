@@ -16,9 +16,9 @@ jobs:
       - name: setup postgres
         uses: harmon758/postgresql-action@v1
         with:
-          postgresql db: be-nc-games
-          postgresql user: kirsty
-          postgresql password: ninja007
+          postgresql db: "be-nc-games"
+          postgresql user: "kirsty"
+          postgresql password: "ninja007"
 
       - name: install dependencies
         run: npm i
