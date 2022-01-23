@@ -1,0 +1,27 @@
+name: Test and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: setup postgres
+        uses:
+        with:
+          postgresql db: be-nc-games
+          postgresql user: kirsty
+          postgresql password: ninja007
+
+      - name: install dependencies
+        run: npm i
+
+      - name: test everything
+        run: PGDATABASE=be-nc-games PGUSER=kirsty PGPASSWORD=ninja007 npm t
