@@ -6,7 +6,10 @@ const {
   addComment,
 } = require("../models/reviews-models");
 
-const { checkReviewExists, checkUserExists } = require("../utils/check-exists-utils");
+const {
+  checkReviewExists,
+  checkUserExists,
+} = require("../utils/check-exists-utils");
 
 exports.getReviewById = async (req, res, next) => {
   const { review_id } = req.params;
@@ -26,10 +29,17 @@ exports.patchReviewByVote = async (req, res, next) => {
   const { review_id } = req.params;
   const { inc_votes } = req.body;
 
+  console.log(req.body)
+  console.log(inc_votes);
   try {
     const updateVoteQuery = await updateReviewByVote(review_id, inc_votes);
-    if (updateVoteQuery) {
+    if (inc_votes !== undefined) {
+      console.log("successful...");
       res.status(201).send({ review: updateVoteQuery });
+    } 
+    else if (inc_votes === undefined) {
+      console.log("this is a bad request");
+      await Promise.reject({ status: 400, msg: "Bad request!" });
     } else {
       await Promise.reject({
         status: 404,
@@ -60,9 +70,10 @@ exports.getReviews = async (req, res, next) => {
 
 exports.getCommentsByReview = async (req, res, next) => {
   const { review_id } = req.params;
+  console.log(review_id);
   try {
     const commentData = await selectCommentsByReview(review_id);
-    if (commentData) {
+    if (commentData.length > 0) {
       res.status(200).send({ comments: commentData });
     } else {
       await Promise.reject({

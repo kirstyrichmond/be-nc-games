@@ -99,7 +99,6 @@ describe("PATCH /api/reviews/:review_id", () => {
       category: "euro game",
       created_at: "2021-01-18T10:00:20.514Z",
       votes: 11,
-      //   comment_count: 0,
     });
   });
   test("status 200: returns the updated review votes by negative value", async () => {
@@ -112,6 +111,25 @@ describe("PATCH /api/reviews/:review_id", () => {
       .expect(201);
     expect(res.body.review.votes).toBe(13);
   });
+  // test.only("status 200: returns unchanged review when missing inc_votes", async () => {
+  //   const reviewUpdate = {};
+  //   const res = await request(app)
+  //     .patch("/api/reviews/1")
+  //     .send(reviewUpdate)
+  //     .expect(200);
+  //   expect(res.body.review).toMatchObject({
+  //     review_id: 1,
+  //     title: "Agricola",
+  //     designer: "Uwe Rosenberg",
+  //     owner: "mallionaire",
+  //     review_img_url:
+  //       "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+  //     review_body: "Farmyard fun!",
+  //     category: "euro game",
+  //     created_at: "2021-01-18T10:00:20.514Z",
+  //     votes: 11,
+  //   });
+  // });
   test("status 404: returns error message when updating a valid but non existent review_id", async () => {
     const reviewUpdate = {
       inc_votes: 22,
@@ -143,16 +161,21 @@ describe("PATCH /api/reviews/:review_id", () => {
       .expect(400);
     expect(res.body.msg).toBe("Bad request!");
   });
+  test("status 400: returns error message when passed empty object to update inc_votes", async () => {
+    const reviewUpdate = {};
+    const res = await request(app)
+      .patch("/api/reviews/13")
+      .send(reviewUpdate)
+      .expect(400);
+    expect(res.body.msg).toBe("Bad request!");
+  });
 });
 
 describe("GET /api/reviews", () => {
-  test("status 200: responds with array of review objects", async () => {
+  test("status 200: responds with array of review objects with each object containing the following properties", async () => {
     const res = await request(app).get("/api/reviews");
     expect(res.body.reviews).toBeInstanceOf(Array);
     expect(res.body.reviews).toHaveLength(13);
-  });
-  test("status 200: each review object contains the following properties", async () => {
-    const res = await request(app).get("/api/reviews");
     res.body.reviews.forEach((review) => {
       expect(review).toMatchObject({
         review_id: expect.any(Number),
@@ -224,16 +247,16 @@ describe("GET /api/reviews", () => {
       expect(review.category).toBe("social deduction");
     });
   });
-  test("status 400: invalid order_by query", async () => {
-    const res = await request(app)
-      .get("/api/reviews?order=invalid")
-      .expect(400);
-    expect(res.body.msg).toBe("Bad request!");
-  });
-  // test("status 404: valid but non-existent category query", async () => {
-  //   const res = await request(app).get("/api/reviews?category=bananas").expect(404);
+  // test('status 404: responds with "not found" when passed a category that does not exist', async () => {
+  //   const res = await request(app)
+  //     .get("/api/reviews?category=bananas")
+  //     .expect(404);
   //   expect(res.body.msg).toBe("Not found!");
   // });
+});
+test("status 400: invalid order_by query", async () => {
+  const res = await request(app).get("/api/reviews?order=invalid").expect(400);
+  expect(res.body.msg).toBe("Bad request!");
 });
 
 describe("GET /api/reviews/:review_id/comments", () => {
@@ -251,6 +274,12 @@ describe("GET /api/reviews/:review_id/comments", () => {
         body: expect.any(String),
       });
     });
+  });
+  test("status 404: returns error message when passed a non-existent review_id", async () => {
+    const res = await request(app)
+      .get("/api/reviews/9999/comments")
+      .expect(404);
+    expect(res.body.msg).toBe("Not found!");
   });
 });
 

@@ -16,7 +16,7 @@ const seed = async (data) => {
 
   await db.query(`
       CREATE TABLE categories (
-        slug VARCHAR(50) NOT NULL PRIMARY KEY,
+        slug VARCHAR(50) PRIMARY KEY,
         description VARCHAR(600) NOT NULL
         );
       `);
@@ -37,7 +37,7 @@ const seed = async (data) => {
       CREATE TABLE reviews (
         review_id SERIAL PRIMARY KEY,
         title VARCHAR(75) NOT NULL,
-        designer VARCHAR(55),
+        designer VARCHAR(55) NOT NULL,
         owner VARCHAR(55) NOT NULL REFERENCES users(username),
         review_img_url VARCHAR(175) DEFAULT 
             'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg',

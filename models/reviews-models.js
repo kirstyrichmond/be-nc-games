@@ -22,7 +22,17 @@ exports.updateReviewByVote = async (review_id, updateVote) => {
       RETURNING *;`,
     [updateVote, review_id]
   );
+  console.log(reviewVote);
 
+  if (reviewVote.rows.length === 0) {
+    return Promise.reject({
+      status: 404,
+      msg: "That review_id does not exist!",
+    });
+  }
+
+  console.log(review_id);
+  console.log(reviewVote.rows);
   return reviewVote.rows[0];
 };
 
@@ -63,6 +73,7 @@ exports.selectReviews = async (
         ${categoryFilter}
         GROUP BY reviews.review_id
         ORDER BY ${sortBy} ${orderBy};`;
+
   const reviewResolved = await db.query(review);
 
   return reviewResolved.rows;
@@ -74,6 +85,7 @@ exports.selectCommentsByReview = async (review_id) => {
       WHERE comments.review_id = $1;`,
     [review_id]
   );
+  console.log(comments.rows);
   return comments.rows;
 };
 
