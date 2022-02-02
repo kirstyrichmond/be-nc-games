@@ -13,8 +13,10 @@ const {
 
 exports.getReviewById = async (req, res, next) => {
   const { review_id } = req.params;
+
   try {
     const checkReviewById = await selectReviewById(review_id);
+
     if (checkReviewById) {
       res.status(200).send({ review: checkReviewById });
     } else {
@@ -29,15 +31,15 @@ exports.patchReviewByVote = async (req, res, next) => {
   const { review_id } = req.params;
   const { inc_votes } = req.body;
 
-  console.log(req.body)
-  console.log(inc_votes);
   try {
     const updateVoteQuery = await updateReviewByVote(review_id, inc_votes);
-    if (inc_votes !== undefined) {
+
+    if (inc_votes === undefined) {
+      res.status(200).send({ review: updateVoteQuery });
+    } else if (inc_votes) {
       console.log("successful...");
       res.status(201).send({ review: updateVoteQuery });
-    } 
-    else if (inc_votes === undefined) {
+    } else if (typeof inc_votes !== "number") {
       console.log("this is a bad request");
       await Promise.reject({ status: 400, msg: "Bad request!" });
     } else {
@@ -53,8 +55,10 @@ exports.patchReviewByVote = async (req, res, next) => {
 
 exports.getReviews = async (req, res, next) => {
   const { sort_by, order, category } = req.query;
+
   try {
     const reviewsData = await selectReviews(sort_by, order, category);
+
     if (reviewsData) {
       res.status(200).send({ reviews: reviewsData });
     } else {
@@ -70,9 +74,11 @@ exports.getReviews = async (req, res, next) => {
 
 exports.getCommentsByReview = async (req, res, next) => {
   const { review_id } = req.params;
-  console.log(review_id);
+  // console.log(review_id);
+
   try {
     const commentData = await selectCommentsByReview(review_id);
+
     if (commentData.length > 0) {
       res.status(200).send({ comments: commentData });
     } else {
@@ -90,11 +96,12 @@ exports.postComment = async (req, res, next) => {
   const { review_id } = req.params;
   const { username, body } = req.body;
 
-  console.log(req.body.body.length)
+  // console.log(req.body.body.length)
 
   try {
     const reviewExists = await checkReviewExists(review_id);
     const userExists = await checkUserExists(username);
+
     if (!reviewExists || !userExists) {
       await Promise.reject({ status: 404, msg: "Not found!" });
     } else if (req.body.body.length === 0) {
