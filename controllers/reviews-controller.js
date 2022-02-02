@@ -90,12 +90,14 @@ exports.postComment = async (req, res, next) => {
   const { review_id } = req.params;
   const { username, body } = req.body;
 
+  console.log(req.body.body.length)
+
   try {
     const reviewExists = await checkReviewExists(review_id);
     const userExists = await checkUserExists(username);
     if (!reviewExists || !userExists) {
       await Promise.reject({ status: 404, msg: "Not found!" });
-    } else if (!body.length) {
+    } else if (req.body.body.length === 0) {
       await Promise.reject({ status: 400, msg: "Bad request!" });
     } else {
       const comment = await addComment(review_id, username, body);

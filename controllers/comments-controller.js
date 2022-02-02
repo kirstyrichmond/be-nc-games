@@ -7,9 +7,11 @@ const { checkCommentExists } = require("../utils/check-exists-utils");
 exports.patchCommentVote = async (req, res, next) => {
   const { comment_id } = req.params;
   const { inc_votes } = req.body;
+
   try {
     const comment = await updateCommentVote(comment_id, inc_votes);
-    if (comment && Object.keys(req.body).length === 1) {
+
+    if (comment && Object.keys(req.body).length > 0) {
       res.status(201).send({ comment });
     } else if (comment) {
       res.status(400).send({ msg: "Bad request!" });
@@ -23,6 +25,7 @@ exports.patchCommentVote = async (req, res, next) => {
 
 exports.deleteComment = async (req, res, next) => {
   const { comment_id } = req.params;
+
   try {
     const commentExists = await checkCommentExists(comment_id);
     if (commentExists) {

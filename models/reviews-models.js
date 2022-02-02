@@ -22,7 +22,6 @@ exports.updateReviewByVote = async (review_id, updateVote) => {
       RETURNING *;`,
     [updateVote, review_id]
   );
-  console.log(reviewVote);
 
   if (reviewVote.rows.length === 0) {
     return Promise.reject({
@@ -31,8 +30,6 @@ exports.updateReviewByVote = async (review_id, updateVote) => {
     });
   }
 
-  console.log(review_id);
-  console.log(reviewVote.rows);
   return reviewVote.rows[0];
 };
 

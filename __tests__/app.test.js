@@ -381,7 +381,7 @@ describe("GET /api/users/:username", () => {
 });
 
 describe("PATCH /api/comments/:comment_id", () => {
-  test("status 200: updates selected comment vote with positive value", async () => {
+  test("status 201: updates selected comment vote with positive value", async () => {
     const commentUpdate = {
       inc_votes: 5,
     };
@@ -439,15 +439,24 @@ describe("PATCH /api/comments/:comment_id", () => {
       .expect(400);
     expect(res.body.msg).toBe("Bad request!");
   });
-  test('status 400: returns "Bad request" when passed inc_votes with another property on request body', async () => {
+  test('status 201: returns comment with updated votes when passed inc_votes with another property on request body', async () => {
     const commentUpdate = {
-      inc_votes: 1,
-      username: "Snoop dogg",
+      inc_votes: 100,
+      author: "cooljmessy",
     };
     const res = await request(app)
-      .patch("/api/comments/2")
+      .patch("/api/comments/6")
       .send(commentUpdate)
-      .expect(400);
-    expect(res.body.msg).toBe("Bad request!");
+      .expect(201);
+    const comment = res.body.comment;
+    expect(comment.votes).toBe(110);
+    expect(comment).toMatchObject({
+      comment_id: 6,
+      body: "Not sure about dogs, but my cat likes to get involved with board games, the boxes are their particular favourite",
+      votes: 110,
+      author: "philippaclaire9",
+      review_id: 3,
+      created_at: "2021-03-27T19:49:48.110Z",
+    });
   });
 });

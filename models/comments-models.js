@@ -8,6 +8,7 @@ exports.updateCommentVote = async (comment_id, inc_votes) => {
     RETURNING *;`,
     [inc_votes, comment_id]
   );
+  // console.log(comment_id, inc_votes, comment.rows)
   return comment.rows[0];
 };
 
