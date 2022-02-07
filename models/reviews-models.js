@@ -15,36 +15,33 @@ exports.selectReviewById = async (review_id) => {
 };
 
 exports.updateReviewByVote = async (review_id, updateVote) => {
-  // console.log(review_id, updateVote)
-
   if (updateVote === undefined) {
     const reviewOriginal = await db.query(
       `SELECT reviews.*
        FROM reviews
        WHERE review_id = $1;`,
       [review_id]
-    )
-    
-    // console.log(reviewOriginal.rows[0])
+    );
+
     return reviewOriginal.rows[0];
+  } else {
+    const reviewVote = await db.query(
+      `UPDATE reviews
+        SET votes = votes + $1
+        WHERE review_id = $2
+        RETURNING *;`,
+      [updateVote, review_id]
+    );
+
+    if (reviewVote.rows.length === 0) {
+      return Promise.reject({
+        status: 404,
+        msg: "That review_id does not exist!",
+      });
+    }
+
+    return reviewVote.rows[0];
   }
-
-  const reviewVote = await db.query(
-    `UPDATE reviews
-      SET votes = votes + $1
-      WHERE review_id = $2
-      RETURNING *;`,
-    [updateVote, review_id]
-  );
-
-  if (reviewVote.rows.length === 0) {
-    return Promise.reject({
-      status: 404,
-      msg: "That review_id does not exist!",
-    });
-  }
-
-  return reviewVote.rows[0];
 };
 
 exports.selectReviews = async (

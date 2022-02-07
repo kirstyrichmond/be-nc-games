@@ -37,10 +37,8 @@ exports.patchReviewByVote = async (req, res, next) => {
     if (inc_votes === undefined) {
       res.status(200).send({ review: updateVoteQuery });
     } else if (inc_votes) {
-      console.log("successful...");
       res.status(201).send({ review: updateVoteQuery });
     } else if (typeof inc_votes !== "number") {
-      console.log("this is a bad request");
       await Promise.reject({ status: 400, msg: "Bad request!" });
     } else {
       await Promise.reject({

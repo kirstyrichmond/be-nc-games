@@ -8,6 +8,16 @@ exports.selectUsers = async () => {
 };
 
 exports.selectUserByUsername = async (username) => {
+  console.log(username);
+  const regex = /^[a-z, 0-9]*$/;
+
+  if (!username.match(regex)) {
+    return Promise.reject({
+      status: 400,
+      msg: "Bad request!",
+    });
+  }
+
   const user = await db.query(
     `SELECT *
       FROM users

@@ -112,25 +112,20 @@ describe("PATCH /api/reviews/:review_id", () => {
     expect(res.body.review.votes).toBe(13);
   });
   test("status 200: returns unchanged review when missing inc_votes", async () => {
-    // const reviewUpdate = {};
-    const res = await request(app)
-    .patch("/api/reviews/1")
-    .send({})
-    .expect(200);
-    // console.log(res.body)
-      expect(res.body.review.votes).toBe(1)
-      expect(res.body.review).toMatchObject({
-        review_id: 1,
-        title: "Agricola",
-        designer: "Uwe Rosenberg",
-        owner: "mallionaire",
-        review_img_url:
-          "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
-        review_body: "Farmyard fun!",
-        category: "euro game",
-        created_at: "2021-01-18T10:00:20.514Z",
-        votes: 1,
-      });
+    const res = await request(app).patch("/api/reviews/1").send().expect(200);
+    expect(res.body.review.votes).toBe(1);
+    expect(res.body.review).toMatchObject({
+      review_id: 1,
+      title: "Agricola",
+      designer: "Uwe Rosenberg",
+      owner: "mallionaire",
+      review_img_url:
+        "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+      review_body: "Farmyard fun!",
+      category: "euro game",
+      created_at: "2021-01-18T10:00:20.514Z",
+      votes: 1,
+    });
   });
   test("status 404: returns error message when updating a valid but non existent review_id", async () => {
     const reviewUpdate = {
@@ -163,14 +158,6 @@ describe("PATCH /api/reviews/:review_id", () => {
       .expect(400);
     expect(res.body.msg).toBe("Bad request!");
   });
-  // test("status 400: returns error message when passed empty object to update inc_votes", async () => {
-  //   const reviewUpdate = {};
-  //   const res = await request(app)
-  //     .patch("/api/reviews/13")
-  //     .send(reviewUpdate)
-  //     .expect(400);
-  //   expect(res.body.msg).toBe("Bad request!");
-  // });
 });
 
 describe("GET /api/reviews", () => {
@@ -380,6 +367,12 @@ describe("GET /api/users/:username", () => {
     const res = await request(app).get("/api/users/mickeymouse88").expect(404);
     expect(res.body.msg).toBe("Not found!");
   });
+  test('status 400: reponds with "bad request" when passed an invalid username', async () => {
+    const res = await request(app)
+      .get("/api/users/invalid-username!")
+      .expect(400);
+    expect(res.body.msg).toBe("Bad request!");
+  });
 });
 
 describe("PATCH /api/comments/:comment_id", () => {
@@ -441,7 +434,7 @@ describe("PATCH /api/comments/:comment_id", () => {
       .expect(400);
     expect(res.body.msg).toBe("Bad request!");
   });
-  test('status 201: returns comment with updated votes when passed inc_votes with another property on request body', async () => {
+  test("status 201: returns comment with updated votes when passed inc_votes with another property on request body", async () => {
     const commentUpdate = {
       inc_votes: 100,
       author: "cooljmessy",
