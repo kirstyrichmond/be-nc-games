@@ -93,7 +93,6 @@ exports.selectCommentsByReview = async (review_id) => {
       WHERE comments.review_id = $1;`,
     [review_id]
   );
-  console.log(comments.rows);
   return comments.rows;
 };
 
@@ -107,4 +106,24 @@ exports.addComment = async (review_id, username, body) => {
     [username, review_id, body]
   );
   return comment.rows[0];
+};
+
+exports.addReview = async (
+  title,
+  designer,
+  owner,
+  review_img_url,
+  review_body,
+  category
+) => {
+  const review = await db.query(
+    `INSERT INTO reviews
+      (title, designer, owner, review_img_url, review_body, category)
+      VALUES
+      ($1, $2, $3, $4, $5, $6)
+      RETURNING *;`,
+    [title, designer, owner, review_img_url, review_body, category]
+  );
+  console.log(review.rows[0], "<< final posted review");
+  return review.rows[0];
 };

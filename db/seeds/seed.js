@@ -38,8 +38,8 @@ const seed = async (data) => {
         review_id SERIAL PRIMARY KEY,
         title VARCHAR(75) NOT NULL,
         designer VARCHAR(55) NOT NULL,
-        owner VARCHAR(55) NOT NULL REFERENCES users(username),
-        review_img_url VARCHAR(175) DEFAULT 
+        owner VARCHAR(180) NOT NULL REFERENCES users(username),
+        review_img_url VARCHAR(500) DEFAULT 
             'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg',
         review_body VARCHAR(1000) NOT NULL,
         category VARCHAR(75) NOT NULL REFERENCES categories(slug),

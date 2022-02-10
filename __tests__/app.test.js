@@ -272,35 +272,38 @@ describe("GET /api/reviews/:review_id/comments", () => {
   });
 });
 
-describe('POST /api/reviews/:review_id', () => {
+describe.only("POST /api/reviews/:review_id", () => {
   const newReview = {
     title: "Monopoly Disney",
     designer: "Disney",
     owner: "mallionaire",
-    review_img_url: "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
+    review_img_url:
+      "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
     review_body: "Family fun!",
     category: "social deduction",
-    created_at: "2022-01-18T10:00:20.514Z",
-    votes: 0,
-    comment_count: 0
-  }
-  test('status 201: returns new posted review', async () => {
+    // created_at: "2022-01-18T10:00:20.514Z",
+    // votes: 0,
+    // comment_count: 0
+  };
+  test("status 201: returns new posted review", async () => {
     const res = await request(app)
       .post("/api/reviews/14")
       .send(newReview)
-      .expect(201)
-      expect(res.body.review).toMatchObject({
-        review_id: 14,
-        title: "Monopoly Disney",
-        designer: "Disney",
-        owner: "mallionaire",
-        review_img_url: "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
-        review_body: "Family fun!",
-        category: "social deduction",
-        created_at: "2022-01-18T10:00:20.514Z",
-        votes: 0,
-        comment_count: 0
-      })
+      .expect(201);
+    console.log(res.body);
+    expect(res.body.review).toMatchObject({
+      review_id: 14,
+      title: "Monopoly Disney",
+      designer: "Disney",
+      owner: "mallionaire",
+      review_img_url:
+        "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
+      review_body: "Family fun!",
+      category: "social deduction",
+      created_at: expect.any(String),
+      // votes: 0,
+      // comment_count: 0,
+    });
   });
 });
 

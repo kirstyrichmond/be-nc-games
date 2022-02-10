@@ -6,12 +6,14 @@ const {
   getCommentsByReview,
   patchReviewByVote,
   postComment,
+  postReview,
 } = require("../controllers/reviews-controller");
 
 reviewsRouter.get("/", getReviews);
 
 reviewsRouter.get("/:review_id", getReviewById);
 reviewsRouter.patch("/:review_id", patchReviewByVote);
+reviewsRouter.post("/:review_id", postReview);
 
 reviewsRouter.get("/:review_id/comments", getCommentsByReview);
 reviewsRouter.post("/:review_id/comments", postComment);
