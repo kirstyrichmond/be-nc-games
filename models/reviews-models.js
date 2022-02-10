@@ -73,7 +73,7 @@ exports.selectReviews = async (
     categoryFilter = `WHERE reviews.category = '${category}'`;
   }
 
-  let review = `SELECT reviews.review_id, reviews.title, reviews.owner, reviews.review_img_url, reviews.category, reviews.created_at, reviews.votes, COUNT(comments.comment_id)::INT
+  let review = `SELECT reviews.review_id, reviews.title, reviews.designer, reviews.owner, reviews.review_img_url, reviews.review_body, reviews.category, reviews.created_at, reviews.votes, COUNT(comments.comment_id)::INT
         AS comment_count
         FROM reviews
         LEFT JOIN comments
