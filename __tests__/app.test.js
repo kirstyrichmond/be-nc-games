@@ -281,16 +281,12 @@ describe.only("POST /api/reviews/:review_id", () => {
       "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
     review_body: "Family fun!",
     category: "social deduction",
-    // created_at: "2022-01-18T10:00:20.514Z",
-    // votes: 0,
-    // comment_count: 0
   };
   test("status 201: returns new posted review", async () => {
     const res = await request(app)
       .post("/api/reviews/14")
       .send(newReview)
       .expect(201);
-    console.log(res.body);
     expect(res.body.review).toMatchObject({
       review_id: 14,
       title: "Monopoly Disney",
@@ -301,10 +297,40 @@ describe.only("POST /api/reviews/:review_id", () => {
       review_body: "Family fun!",
       category: "social deduction",
       created_at: expect.any(String),
-      // votes: 0,
-      // comment_count: 0,
     });
   });
+  test('status 404: responds with "not found" when user is not logged in', async () => {
+    const invalidUser = {
+      title: "Monopoly Disney",
+      designer: "Disney",
+      owner: "",
+      review_img_url:
+        "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
+      review_body: "Family fun!",
+      category: "social deduction",
+    };
+    const res = await request(app)
+      .post("/api/reviews/14")
+      .send(invalidUser)
+      .expect(404);
+    expect(res.body.msg).toBe("Not found!");
+  });
+  // test.only('status 400: responds with "bad request" when review_body is empty', async () => {
+  //   const noReviewBody = {
+  //     title: "Monopoly Disney",
+  //     designer: "Disney",
+  //     owner: "mallionaire",
+  //     review_img_url:
+  //       "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
+  //     review_body: "",
+  //     category: "social deduction",
+  //   };
+  //   const res = await request(app)
+  //     .post("/api/reviews/2/comments")
+  //     .send(noReviewBody)
+  //     .expect(400);
+  //   expect(res.body.msg).toBe("Bad request!");
+  // });
 });
 
 describe("POST /api/reviews/:review_id/comments", () => {

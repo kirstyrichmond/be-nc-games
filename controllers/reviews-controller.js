@@ -74,7 +74,6 @@ exports.getReviews = async (req, res, next) => {
 exports.postReview = async (req, res, next) => {
   const { title, designer, owner, review_img_url, review_body, category } =
     req.body;
-  console.log(title, designer, owner, review_img_url, review_body, category);
 
   console.log(req.body, "<< req body");
 
@@ -90,6 +89,11 @@ exports.postReview = async (req, res, next) => {
         category
       );
       res.status(201).send({ review });
+    } else if (!userExists ) {
+      await Promise.reject({
+        status: 404,
+        msg: "Not found!",
+      });
     } else {
       await Promise.reject({ status: 400, msg: "Bad request!" });
     }
@@ -121,8 +125,6 @@ exports.getCommentsByReview = async (req, res, next) => {
 exports.postComment = async (req, res, next) => {
   const { review_id } = req.params;
   const { username, body } = req.body;
-
-  // console.log(req.body.body.length)
 
   try {
     const reviewExists = await checkReviewExists(review_id);
