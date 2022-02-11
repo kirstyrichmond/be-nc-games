@@ -56,7 +56,7 @@ const seed = async (data) => {
         body VARCHAR(1000) NOT NULL,
         votes INT DEFAULT 0,
         author VARCHAR(75) NOT NULL REFERENCES users(username),
-        review_id INT NOT NULL REFERENCES reviews(review_id),
+        review_id INT REFERENCES reviews(review_id) ON DELETE CASCADE,
         created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
       `);

@@ -1,4 +1,5 @@
 const db = require("../db/connection.js");
+const { removeComment } = require("./comments-models.js");
 
 exports.selectReviewById = async (review_id) => {
   const review = await db.query(
@@ -88,6 +89,9 @@ exports.selectReviews = async (
 };
 
 exports.removeReview = async (review_id) => {
+ 
+  removeComment()
+
   const review = await db.query(
     `DELETE FROM reviews
       WHERE review_id = $1;`,

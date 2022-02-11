@@ -334,6 +334,11 @@ describe("POST /api/reviews/:review_id", () => {
 });
 
 describe("DELETE /api/reviews/:review_id", () => {
+  // test("status 204: deletes review comments if review has any", async () => {
+  //   const res = await request(app).delete("/api/reviews/1/comments").expect(204);
+
+  //   expect(res.body).toEqual({});
+  // });
   test("status 204: deletes review and responds with no content", async () => {
     const res = await request(app).delete("/api/reviews/1").expect(204);
 
