@@ -5,6 +5,7 @@ const {
   selectCommentsByReview,
   addComment,
   addReview,
+  removeReview,
 } = require("../models/reviews-models");
 
 const {
@@ -89,13 +90,32 @@ exports.postReview = async (req, res, next) => {
         category
       );
       res.status(201).send({ review });
-    } else if (!userExists ) {
+    } else if (!userExists) {
       await Promise.reject({
         status: 404,
         msg: "Not found!",
       });
     } else {
       await Promise.reject({ status: 400, msg: "Bad request!" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteReview = async (req, res, next) => {
+  const { review_id } = req.params;
+  console.log("<< inside controller");
+
+  console.log(review_id, "<< review id to delete");
+
+  try {
+    const reviewExists = await checkReviewExists(review_id);
+    if (reviewExists) {
+      const review = await removeReview(review_id);
+      res.status(204).send({ review });
+    } else {
+      await Promise.reject({ status: 404, msg: "Not found!" });
     }
   } catch (err) {
     next(err);

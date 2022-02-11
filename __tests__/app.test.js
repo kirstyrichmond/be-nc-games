@@ -272,7 +272,7 @@ describe("GET /api/reviews/:review_id/comments", () => {
   });
 });
 
-describe.only("POST /api/reviews/:review_id", () => {
+describe("POST /api/reviews/:review_id", () => {
   const newReview = {
     title: "Monopoly Disney",
     designer: "Disney",
@@ -331,6 +331,38 @@ describe.only("POST /api/reviews/:review_id", () => {
   //     .expect(400);
   //   expect(res.body.msg).toBe("Bad request!");
   // });
+});
+
+describe("DELETE /api/reviews/:review_id", () => {
+  test("status 204: deletes review and responds with no content", async () => {
+    const res = await request(app).delete("/api/reviews/1").expect(204);
+
+    expect(res.body).toEqual({});
+  });
+  test("status 404: responds with 'not found' when review does not exist", async () => {
+    const res = await request(app).delete("/api/reviews/9999").expect(404);
+    expect(res.body.msg).toBe("Not found!");
+  });
+  test("status 404: responds with 'not found' when deleting a review no longer exists", async () => {
+    const res = await request(app).delete("/api/reviews/1").expect(204);
+    expect(res.body).toEqual({});
+    const resNo2 = await request(app).delete("/api/reviews/1").expect(404);
+    expect(resNo2.body.msg).toBe("Not found!");
+  });
+});
+
+describe("GET /api/users", () => {
+  test('status 200: responds with array of user objects containing "username" property', async () => {
+    const res = await request(app).get("/api/users").expect(200);
+    const users = res.body.users;
+    expect(users).toBeInstanceOf(Array);
+    expect(users).toHaveLength(4);
+    users.forEach((user) => {
+      expect(user).toMatchObject({
+        username: expect.any(String),
+      });
+    });
+  });
 });
 
 describe("POST /api/reviews/:review_id/comments", () => {

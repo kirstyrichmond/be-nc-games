@@ -87,6 +87,15 @@ exports.selectReviews = async (
   return reviewResolved.rows;
 };
 
+exports.removeReview = async (review_id) => {
+  const review = await db.query(
+    `DELETE FROM reviews
+      WHERE review_id = $1;`,
+    [review_id]
+  );
+  return review.rows[0];
+};
+
 exports.selectCommentsByReview = async (review_id) => {
   const comments = await db.query(
     `SELECT * FROM comments
