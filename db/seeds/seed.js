@@ -25,7 +25,7 @@ const seed = async (data) => {
 
   await db.query(`
       CREATE TABLE users (
-        username VARCHAR(25) PRIMARY KEY,
+        username VARCHAR(25) NOT NULL PRIMARY KEY,
         name VARCHAR(55) NOT NULL,
         avatar_url VARCHAR(300)
       )
@@ -38,11 +38,11 @@ const seed = async (data) => {
         review_id SERIAL PRIMARY KEY,
         title VARCHAR(75) NOT NULL,
         designer VARCHAR(55) NOT NULL,
-        owner VARCHAR(180) NOT NULL REFERENCES users(username),
+        owner VARCHAR(180) REFERENCES users(username),
         review_img_url VARCHAR(500) DEFAULT 
             'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg',
         review_body VARCHAR(1000) NOT NULL,
-        category VARCHAR(75) NOT NULL REFERENCES categories(slug),
+        category VARCHAR(75) REFERENCES categories(slug),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         votes INT DEFAULT 0
         );
@@ -55,7 +55,7 @@ const seed = async (data) => {
         comment_id SERIAL PRIMARY KEY,
         body VARCHAR(1000) NOT NULL,
         votes INT DEFAULT 0,
-        author VARCHAR(75) NOT NULL REFERENCES users(username),
+        author VARCHAR(75) REFERENCES users(username) NOT NULL,
         review_id INT REFERENCES reviews(review_id) ON DELETE CASCADE,
         created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
