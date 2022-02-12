@@ -60,6 +60,7 @@ exports.selectReviews = async (
     "category",
     "created_at",
     "votes",
+    "comment_count",
   ];
 
   if (!validOrderBy.includes(orderBy) || !validSortBy.includes(sortBy)) {
@@ -89,8 +90,7 @@ exports.selectReviews = async (
 };
 
 exports.removeReview = async (review_id) => {
- 
-  removeComment()
+  removeComment();
 
   const review = await db.query(
     `DELETE FROM reviews
