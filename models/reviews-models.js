@@ -121,6 +121,27 @@ exports.addComment = async (review_id, username, body) => {
   return comment.rows[0];
 };
 
+// exports.addReview = async (
+//   title,
+//   designer,
+//   owner,
+//   review_img_url,
+//   review_body,
+//   category
+// ) => {
+//   const review = await db.query(
+//     `INSERT INTO reviews
+//       (title, designer, owner, review_img_url, review_body, category)
+//       VALUES
+//       ($1, $2, $3, $4, $5, $6)
+//       RETURNING *;`,
+//     [title, designer, owner, review_img_url, review_body, category]
+//   );
+//   // console.log(review.rows[0], "<< final posted review");
+//   // console.log(review.rows);
+//   return review.rows[0];
+// };
+
 exports.addReview = async (
   title,
   designer,
@@ -137,6 +158,7 @@ exports.addReview = async (
       RETURNING *;`,
     [title, designer, owner, review_img_url, review_body, category]
   );
-  console.log(review.rows[0], "<< final posted review");
-  return review.rows[0];
+  // console.log(review.rows[0], "<< final posted review");
+  console.log(review.rows);
+  return review.rows;
 };

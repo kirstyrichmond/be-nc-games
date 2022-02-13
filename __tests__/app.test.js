@@ -272,7 +272,7 @@ describe("GET /api/reviews/:review_id/comments", () => {
   });
 });
 
-describe("POST /api/reviews/:review_id", () => {
+describe.only("POST /api/reviews", () => {
   const newReview = {
     title: "Monopoly Disney",
     designer: "Disney",
@@ -282,39 +282,49 @@ describe("POST /api/reviews/:review_id", () => {
     review_body: "Family fun!",
     category: "social deduction",
   };
-  test("status 201: returns new posted review", async () => {
+  test("status 201: returns new posted review into review endpoint", async () => {
     const res = await request(app)
-      .post("/api/reviews/14")
+      .post("/api/reviews")
       .send(newReview)
       .expect(201);
-    expect(res.body.review).toMatchObject({
-      review_id: 14,
-      title: "Monopoly Disney",
-      designer: "Disney",
-      owner: "mallionaire",
-      review_img_url:
-        "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
-      review_body: "Family fun!",
-      category: "social deduction",
-      created_at: expect.any(String),
-    });
+    expect(res.body.review).toBeInstanceOf(Array);
+    const res2 = await request(app).get("/api/reviews");
+    // console.log(res2.body.reviews.length);
+    expect(res2.body.reviews.length).toBe(14);
   });
-  test('status 404: responds with "not found" when user is not logged in', async () => {
-    const invalidUser = {
-      title: "Monopoly Disney",
-      designer: "Disney",
-      owner: "",
-      review_img_url:
-        "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
-      review_body: "Family fun!",
-      category: "social deduction",
-    };
-    const res = await request(app)
-      .post("/api/reviews/14")
-      .send(invalidUser)
-      .expect(404);
-    expect(res.body.msg).toBe("Not found!");
-  });
+  // test("status 201: returns new posted review", async () => {
+  //   const res = await request(app)
+  //     .post("/api/reviews/14")
+  //     .send(newReview)
+  //     .expect(201);
+  //   expect(res.body.review).toMatchObject({
+  //     review_id: 14,
+  //     title: "Monopoly Disney",
+  //     designer: "Disney",
+  //     owner: "mallionaire",
+  //     review_img_url:
+  //       "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
+  //     review_body: "Family fun!",
+  //     category: "social deduction",
+  //     created_at: expect.any(String),
+  //   });
+  // });
+  // test('status 404: responds with "not found" when user is not logged in', async () => {
+  //   const invalidUser = {
+  //     title: "Monopoly Disney",
+  //     designer: "Disney",
+  //     owner: "",
+  //     review_img_url:
+  //       "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
+  //     review_body: "Family fun!",
+  //     category: "social deduction",
+  //   };
+  //   const res = await request(app)
+  //     .post("/api/reviews/14")
+  //     .send(invalidUser)
+  //     .expect(404);
+  //   expect(res.body.msg).toBe("Not found!");
+  // });
   // test.only('status 400: responds with "bad request" when review_body is empty', async () => {
   //   const noReviewBody = {
   //     title: "Monopoly Disney",

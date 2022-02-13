@@ -72,6 +72,37 @@ exports.getReviews = async (req, res, next) => {
   }
 };
 
+// exports.postReview = async (req, res, next) => {
+//   const { title, designer, owner, review_img_url, review_body, category } =
+//     req.body;
+
+//   console.log(req.body, "<< req body");
+
+//   try {
+//     const userExists = await checkUserExists(owner);
+//     if (userExists) {
+//       const review = await addReview(
+//         title,
+//         designer,
+//         owner,
+//         review_img_url,
+//         review_body,
+//         category
+//       );
+//       res.status(201).send({ review });
+//     } else if (!userExists) {
+//       await Promise.reject({
+//         status: 404,
+//         msg: "Not found!",
+//       });
+//     } else {
+//       await Promise.reject({ status: 400, msg: "Bad request!" });
+//     }
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
 exports.postReview = async (req, res, next) => {
   const { title, designer, owner, review_img_url, review_body, category } =
     req.body;
