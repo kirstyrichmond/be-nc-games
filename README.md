@@ -104,7 +104,7 @@ Run devlopment environment:
 $ npm start
 ```
 
-As the output of this API is in JSON, you can download the following chrome extension to make the JSON text more huamn-readable.
+As the output of this API is in JSON, you can download the following chrome extension to make the JSON text more human-readable.
 
 https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh
 
