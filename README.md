@@ -14,13 +14,13 @@ This is a board game review based API built to imitate a real backend server whi
 
 Created with:
 
-![image](https://user-images.githubusercontent.com/90627497/158421682-f6d7d6ae-e1eb-4d79-8bc8-0bc83490d113.png)
-![image](https://user-images.githubusercontent.com/90627497/158421745-e5543b7a-753d-4464-8667-799d48d0ed38.png)
-![image](https://user-images.githubusercontent.com/90627497/158421789-c45f6aaa-995f-4ac0-867d-e9b29b685722.png)
+![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![image](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![image](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 
 Hosted with:
 
-![image](https://user-images.githubusercontent.com/90627497/158421855-887d123a-7289-4272-a11c-3160d7b122d0.png)
+![image](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
 
 ## Installation
 
