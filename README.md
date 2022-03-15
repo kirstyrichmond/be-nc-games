@@ -2,11 +2,11 @@
 
 Created by Kirsty Richmond
 
-[NC Games: Heroku](https://be-nc-games-app.herokuapp.com/api)
-<br/>
 [NC Games](https://nc-games-kirsty-richmond.netlify.app)
 <br/>
-**Download JSON viewer plugin to make the JSON text readable** 
+[NC Games: Heroku ⬇](https://be-nc-games-app.herokuapp.com/api)
+<br/>
+** **Download JSON viewer plugin to make the JSON text readable** **
 
 ## Description
 
