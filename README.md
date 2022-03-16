@@ -27,14 +27,14 @@ Hosted with:
 - node
 - postgreSQL
 
-Dependencies
+Dependencies:
 
 - dotenv
 - express
 - pg
 - pg-format
 
-Dev-Dependencies
+Dev-Dependencies:
 
 - jest
 - jest-sorted
