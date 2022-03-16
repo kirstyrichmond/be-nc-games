@@ -4,7 +4,7 @@ Created by Kirsty Richmond
 
 [NC Games](https://nc-games-kirsty-richmond.netlify.app)
 <br/>
-[NC Games: Heroku ⬇](https://be-nc-games-app.herokuapp.com/api)
+[NC Games: API ⬇](https://be-nc-games-app.herokuapp.com/api)
 <br/>
 ** **Download JSON viewer plugin to make the JSON text readable** **
 
