@@ -10,7 +10,7 @@ Created by Kirsty Richmond
 
 ## Description
 
-This is a board game review based API built to imitate a real backend server which will serve the database to the front end architecture of NC Games. The API serves game categories, reviews, users and comments in a JSON format.
+This is a board game review-based API built to imitate a real backend server which will serve the database to the front end architecture of NC Games. The API serves game categories, reviews, users and comments in a JSON format.
 
 Created with:
 
