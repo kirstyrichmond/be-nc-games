@@ -4,13 +4,13 @@ Created by Kirsty Richmond
 
 [NC Games](https://nc-games-kirsty-richmond.netlify.app)
 <br/>
-[NC Games: Heroku ⬇](https://be-nc-games-app.herokuapp.com/api)
+[NC Games: API ⬇](https://be-nc-games-app.herokuapp.com/api)
 <br/>
 \*\* **Download JSON viewer plugin to make the JSON text readable** \*\*
 
 ## Description
 
-This is a board game review based API built to imitate a real backend server which will serve the database to the front end architecture of NC Games. The API serves game categories, reviews, users and comments in a JSON format.
+This is a board game review-based API built to imitate a real backend server which will serve the database to the front end architecture of NC Games. The API serves game categories, reviews, users and comments in a JSON format.
 
 Created with:
 
@@ -27,14 +27,14 @@ Hosted with:
 - node
 - postgreSQL
 
-Dependencies
+Dependencies:
 
 - dotenv
 - express
 - pg
 - pg-format
 
-Dev-Dependencies
+Dev-Dependencies:
 
 - jest
 - jest-sorted
