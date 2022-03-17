@@ -15,7 +15,6 @@ reviewsRouter.post("/", postReview);
 
 reviewsRouter.get("/:review_id", getReviewById);
 reviewsRouter.patch("/:review_id", patchReviewByVote);
-// reviewsRouter.post("/:review_id", postReview);
 reviewsRouter.delete("/:review_id", deleteReview);
 
 reviewsRouter.get("/:review_id/comments", getCommentsByReview);

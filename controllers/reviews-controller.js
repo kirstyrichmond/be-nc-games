@@ -72,42 +72,9 @@ exports.getReviews = async (req, res, next) => {
   }
 };
 
-// exports.postReview = async (req, res, next) => {
-//   const { title, designer, owner, review_img_url, review_body, category } =
-//     req.body;
-
-//   console.log(req.body, "<< req body");
-
-//   try {
-//     const userExists = await checkUserExists(owner);
-//     if (userExists) {
-//       const review = await addReview(
-//         title,
-//         designer,
-//         owner,
-//         review_img_url,
-//         review_body,
-//         category
-//       );
-//       res.status(201).send({ review });
-//     } else if (!userExists) {
-//       await Promise.reject({
-//         status: 404,
-//         msg: "Not found!",
-//       });
-//     } else {
-//       await Promise.reject({ status: 400, msg: "Bad request!" });
-//     }
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
 exports.postReview = async (req, res, next) => {
   const { title, designer, owner, review_img_url, review_body, category } =
     req.body;
-
-  console.log(req.body, "<< req body");
 
   try {
     const userExists = await checkUserExists(owner);
@@ -137,13 +104,10 @@ exports.postReview = async (req, res, next) => {
 exports.deleteReview = async (req, res, next) => {
   const { review_id } = req.params;
 
-  console.log(review_id, "<< review id to delete");
-
   try {
     const reviewExists = await checkReviewExists(review_id);
     if (reviewExists) {
       const review = await removeReview(review_id);
-      console.log(review, "<< review should be deleted");
       res.status(204).send({ review });
     } else {
       await Promise.reject({ status: 404, msg: "Not found!" });
@@ -155,7 +119,6 @@ exports.deleteReview = async (req, res, next) => {
 
 exports.getCommentsByReview = async (req, res, next) => {
   const { review_id } = req.params;
-  // console.log(review_id);
 
   try {
     const commentData = await selectCommentsByReview(review_id);

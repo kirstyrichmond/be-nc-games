@@ -236,12 +236,6 @@ describe("GET /api/reviews", () => {
       expect(review.category).toBe("social deduction");
     });
   });
-  // test('status 404: responds with "not found" when passed a category that does not exist', async () => {
-  //   const res = await request(app)
-  //     .get("/api/reviews?category=bananas")
-  //     .expect(404);
-  //   expect(res.body.msg).toBe("Not found!");
-  // });
 });
 test("status 400: invalid order_by query", async () => {
   const res = await request(app).get("/api/reviews?order=invalid").expect(400);
@@ -289,66 +283,11 @@ describe.only("POST /api/reviews", () => {
       .expect(201);
     expect(res.body.review).toBeInstanceOf(Array);
     const res2 = await request(app).get("/api/reviews");
-    // console.log(res2.body.reviews.length);
     expect(res2.body.reviews.length).toBe(14);
   });
-  // test("status 201: returns new posted review", async () => {
-  //   const res = await request(app)
-  //     .post("/api/reviews/14")
-  //     .send(newReview)
-  //     .expect(201);
-  //   expect(res.body.review).toMatchObject({
-  //     review_id: 14,
-  //     title: "Monopoly Disney",
-  //     designer: "Disney",
-  //     owner: "mallionaire",
-  //     review_img_url:
-  //       "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
-  //     review_body: "Family fun!",
-  //     category: "social deduction",
-  //     created_at: expect.any(String),
-  //   });
-  // });
-  // test('status 404: responds with "not found" when user is not logged in', async () => {
-  //   const invalidUser = {
-  //     title: "Monopoly Disney",
-  //     designer: "Disney",
-  //     owner: "",
-  //     review_img_url:
-  //       "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
-  //     review_body: "Family fun!",
-  //     category: "social deduction",
-  //   };
-  //   const res = await request(app)
-  //     .post("/api/reviews/14")
-  //     .send(invalidUser)
-  //     .expect(404);
-  //   expect(res.body.msg).toBe("Not found!");
-  // });
-  // test.only('status 400: responds with "bad request" when review_body is empty', async () => {
-  //   const noReviewBody = {
-  //     title: "Monopoly Disney",
-  //     designer: "Disney",
-  //     owner: "mallionaire",
-  //     review_img_url:
-  //       "https://cf.geekdo-images.com/s4jUeESvnl4H14OCioWjmw__imagepage/img/PFfgncCsBw6M-pi0XcJToC7GqnU=/fit-in/900x600/filters:no_upscale():strip_icc()/pic55937.jpg",
-  //     review_body: "",
-  //     category: "social deduction",
-  //   };
-  //   const res = await request(app)
-  //     .post("/api/reviews/2/comments")
-  //     .send(noReviewBody)
-  //     .expect(400);
-  //   expect(res.body.msg).toBe("Bad request!");
-  // });
 });
 
 describe("DELETE /api/reviews/:review_id", () => {
-  // test("status 204: deletes review comments if review has any", async () => {
-  //   const res = await request(app).delete("/api/reviews/1/comments").expect(204);
-
-  //   expect(res.body).toEqual({});
-  // });
   test("status 204: deletes review and responds with no content", async () => {
     const res = await request(app).delete("/api/reviews/1").expect(204);
 

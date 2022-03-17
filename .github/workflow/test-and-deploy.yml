@@ -20,8 +20,5 @@ jobs:
           postgresql user: "kirsty"
           postgresql password: "ninja007"
 
-      # - name: install dependencies
-      #   run: npm i
-
       - name: test everything
         run: PGDATABASE=be-nc-games PGUSER=kirsty PGPASSWORD=ninja007 npm t

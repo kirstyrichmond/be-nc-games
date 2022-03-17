@@ -6,7 +6,7 @@ Created by Kirsty Richmond
 <br/>
 [NC Games: Heroku ⬇](https://be-nc-games-app.herokuapp.com/api)
 <br/>
-** **Download JSON viewer plugin to make the JSON text readable** **
+\*\* **Download JSON viewer plugin to make the JSON text readable** \*\*
 
 ## Description
 
@@ -39,7 +39,6 @@ Dev-Dependencies
 - jest
 - jest-sorted
 - supertest
-
 
 ### Clone repo:
 
